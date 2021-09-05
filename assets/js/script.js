@@ -1,7 +1,8 @@
 var timerEl = document.querySelector('#timer');
 var buttonEl = document.querySelector("#btn");
-var highScore = document.querySelector("#high-score");
+var highScoreEl = document.querySelector("#high-score");
 var currentQuestionIndex = 0
+var welcomeScreenEl = document.getElementById("welcome-screen")
 var answer1 = document.createElement('button');
 var answer2 = document.createElement('button');
 var answer3 = document.createElement('button');
@@ -39,15 +40,10 @@ var questions = [
 var timeLeft = questions.length * 15;
 var timeInterval;
 var scoreEl = document.getElementById('final-score')
-
-// buttonEl.addEventListener('click', function() {
-//   countdown();
-
-// });
-
+var highScoreNameEl = document.getElementById('playerName')
+var highScoreScoreEl = document.getElementById('finalScore')
 
 function startQuiz() {
-  var welcomeScreenEl = document.getElementById("welcome-screen")
   welcomeScreenEl.setAttribute('class', 'hide');
   questionsEl.removeAttribute('class');
   countdown();
@@ -88,17 +84,20 @@ function questionClick() {
   if (this.value !== questions[currentQuestionIndex].correctAnswer) {
     timeLeft -= 10;
   }
-timerEl.textcontent = "Time left:" + timeLeft;
-currentQuestionIndex++;
-if (currentQuestionIndex === questions.length){
-  quizEnd()
-}  
-else{
-  getQuestion();
-}
+  timerEl.textcontent = "Time left:" + timeLeft;
+  currentQuestionIndex++;
+  if (currentQuestionIndex === questions.length) {
+    quizEnd()
+  }
+  else {
+    getQuestion();
+  }
 }
 
-function quizEnd(){
+
+
+
+function quizEnd() {
   clearInterval(timeInterval);
   questionTitleEl.setAttribute('class', 'hide');
   answer1.setAttribute('class', 'hide');
@@ -106,10 +105,34 @@ function quizEnd(){
   answer3.setAttribute('class', 'hide');
   answer4.setAttribute('class', 'hide');
   scoreEl.setAttribute('style', 'font-size: 50px')
-  scoreEl.textContent = "Your final score is: " + timeLeft; 
+  scoreEl.textContent = "Your final score is: " + (timeLeft + 1);
+  nameInput();
 }
 
+function nameInput() {
+  var name = window.prompt("Please type in your initials to save your score.")
+  localStorage.setItem('player', name);
+  localStorage.setItem('finalScore', (timeLeft + 1));
+}
 
+function nameRead() {
+  var player = localStorage.getItem('player');
+  var finalScore = localStorage.getItem('finalScore');
+  welcomeScreenEl.setAttribute('class', 'hide');
+  questionTitleEl.setAttribute('class', 'hide');
+  answer1.setAttribute('class', 'hide');
+  answer2.setAttribute('class', 'hide');
+  answer3.setAttribute('class', 'hide');
+  answer4.setAttribute('class', 'hide');
+  scoreEl.setAttribute('class', 'hide');
+  timerEl.setAttribute('class', 'hide');
+  clearInterval(timeInterval);
+  highScoreNameEl.setAttribute('style', 'font-size: 50px; color: red;')
+  highScoreScoreEl.setAttribute('style', 'font-size: 50px; color: cyan;')
+  highScoreNameEl.textContent = player;
+
+  highScoreScoreEl.textContent = finalScore;
+}
 
 
 function countdown() {
@@ -124,12 +147,16 @@ function countdown() {
       // Decrement `timeLeft` by 1
       timeLeft--;
     } else {
+      timeLeft = 0;
       // Once `timeLeft` gets to 0, set `timerEl` to an empty string
-      timerEl.textContent = 0;
+      timerEl.textContent = "Time's up!";
       // Use `clearInterval()` to stop the timer
       clearInterval(timeInterval);
+      quizEnd();
     }
   }, 1000);
 }
+
+highScoreEl.onclick = nameRead;
 
 buttonEl.onclick = startQuiz;

@@ -2,8 +2,12 @@
   background-color: cadetblue;
 }
 
-main, .header{
+main, .header, #scoreList{
   display: flex;
+}
+
+#scoreList{ 
+  justify-content: space-between;
 }
 
 main {
@@ -17,12 +21,28 @@ main {
 
 .container, #welcome-screen {
   justify-content: space-evenly;
-  width: 32%;
+  width: 50%;
 }
 
 #high-score, #timer{
   justify-content: space-between;
+  font-size: 1.1rem;
 }
+
+.high-score {
+  outline: none;
+  border: none;
+  padding: 10px 15px;
+  background: hsl(120, 66%, 46%);
+  border-radius: 12px;
+  box-shadow: 0 3px black;
+}
+
+.high-score:hover {
+  background: hsl(120, 66%, 27%);
+  box-shadow: 0 1px black;
+}
+
 
 .choices {
   outline: none;
@@ -37,7 +57,7 @@ main {
 
 .choices:hover {
   background: hsl(300, 66%, 30%);
-  box-shadow: 0 2px black;
+  box-shadow: 0 1px black;
 }
 
 .hide {
