@@ -9,3 +9,6 @@ This website is intended give the user a brief, coding based quiz, judging the u
 
 ## Link
 https://flumanuck.github.io/coding-quiz/
+
+## Screenshot
+![screenshot of website](https://raw.githubusercontent.com/Flumanuck/coding-quiz/main/Screenshot.PNG)
