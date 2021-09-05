@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,21 +8,35 @@
   <title>Quiz time!</title>
   <link rel="stylesheet" href="./assets/css/style.css" />
 </head>
+
 <body>
   <header>
-    <div class = "header">
-      <div id= "high-score">View high scores</div>
-      <div id= "timer"></div>
+    <div class="header">
+      <div id="high-score">View high scores</div>
+      <div id="timer"></div>
     </div>
   </header>
   <Main>
-    <div class= "container">
-      <h2 id = "questions">Welcome to the Coding Quiz Challenge!</h2>
-      <p id = "answers">There are 5 coding related questions that you need to answer. You have 45 seconds but be warned: Every question you get wrong will deduct 10 seconds from your total time. Try to get the fastest time! </p>
-      <button id= "btn" class= "btn">Click Here to Start</button>
+    <div class="container">
+      <div id="welcome-screen">
+        <h2>Welcome to the Coding Quiz Challenge!</h2>
+        <p id="answers">There are 5 coding related questions that you need to answer. You have 75 seconds but be warned:
+          Every question you get wrong will deduct 10 seconds from your total time. Try to get the fastest time! </p>
+        <button id="btn" class="choices">Click Here to Start!</button>
+      </div>
     </div>
+    <div id="questions" class="hide">
+      <h2 id="question-title"></h2>
+      <div id="choices"></div>
+    </div>
+    <div id="ending-screen">
+      <p id="final-score"></p>
+    </div>
+
   </Main>
-  <footer id = "results"></footer>
-  <script src="./assets/js/script.js"></script></script>
+  <footer id="results"></footer>
+  <script src="./assets/js/script.js"></script>
+  </script>
 </body>
+
 </html>

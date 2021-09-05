@@ -2,62 +2,121 @@ var timerEl = document.querySelector('#timer');
 var buttonEl = document.querySelector("#btn");
 var highScore = document.querySelector("#high-score");
 var currentQuestionIndex = 0
-
-// var questions = [
-//   "Which of these is a NOT a proper statement in Javascript?",
-//   "Which of these is the proper file extention for Javascript?",
-//   "Ideally, how many h1 elements should a single html file have?",
-//   'What is the keyboard shortcut to "Open in default browser" in VS code?',
-//   'In CSS, how do you make an element change when hovered over?'
-// ];
-
+var answer1 = document.createElement('button');
+var answer2 = document.createElement('button');
+var answer3 = document.createElement('button');
+var answer4 = document.createElement('button');
+var choiceEl = document.querySelector('#choices');
+var questionsEl = document.getElementById('questions');
+var questionTitleEl = document.getElementById('question-title');
 var questions = [
   {
-    question:"Which of these is a NOT a proper statement in Javascript?",
-    choices:["if", "else", "else if", "if else"],
-    correctAnswer:"if else"
+    question: "Which of these is a NOT a proper statement in Javascript?",
+    choices: ["if", "else", "else if", "if else"],
+    correctAnswer: "if else"
   },
   {
-    question:"Which of these is the proper file extention for Javascript?",
-    choices:["if", "else", "else if", "if else"],
-    correctAnswer:"if else"
+    question: "Which of these is the proper file extention for Javascript?",
+    choices: ["js", "jvs", "java", "jvsc"],
+    correctAnswer: "if else"
   },
   {
-    question:"Ideally, how many h1 elements should a single html file have?",
-    choices:["if", "else", "else if", "if else"],
-    correctAnswer:"if else"
+    question: "Ideally, how many h1 elements should a single html file have?",
+    choices: ["Only one", "As many as I like", "None, if possible", "As many as there are div elements"],
+    correctAnswer: "Only one"
   },
   {
-    question:'What is the keyboard shortcut to "Open in default browser" in VS code',
-    choices:["if", "else", "else if", "if else"],
-    correctAnswer:"if else"
+    question: 'What is the keyboard shortcut to "Open in default browser" in VS code',
+    choices: ["alt + b", "shift + tab", "alt + f4", "ctrl + b"],
+    correctAnswer: "alt + b"
   },
   {
-    question:"In CSS, how do you make an element change when hovered over?",
-    choices:["if", "else", "else if", "if else"],
-    correctAnswer:"if else"
+    question: "In CSS, how do you make an element change when hovered over?",
+    choices: ["element:hover", "element.hover", "hover=active", "hover.element"],
+    correctAnswer: "element:hover"
   }
 ]
+var timeLeft = questions.length * 15;
+var timeInterval;
+var scoreEl = document.getElementById('final-score')
 
-buttonEl.addEventListener('click', function() {
+// buttonEl.addEventListener('click', function() {
+//   countdown();
+
+// });
+
+
+function startQuiz() {
+  var welcomeScreenEl = document.getElementById("welcome-screen")
+  welcomeScreenEl.setAttribute('class', 'hide');
+  questionsEl.removeAttribute('class');
   countdown();
-});
-
-function getQuestion(){
-  var currentQuestion = questions[currentQuestionIndex]
-  
-
+  getQuestion();
 }
 
-for (var i = 0; i < questions.length; i++) {
-  console.log ([i], questions[i]);
+function getQuestion() {
+  var currentQuestion = questions[currentQuestionIndex];
+  console.log(currentQuestion.question, currentQuestion.choices, currentQuestion.correctAnswer)
+  questionTitleEl.textContent = currentQuestion.question;
+  console.log(currentQuestion.question)
+  currentQuestion.choices.forEach(function (choice) {
+    answer1.textContent = currentQuestion.choices[0];
+    answer2.textContent = currentQuestion.choices[1];
+    answer3.textContent = currentQuestion.choices[2];
+    answer4.textContent = currentQuestion.choices[3];
+    choiceEl.appendChild(answer1);
+    choiceEl.appendChild(answer2);
+    choiceEl.appendChild(answer3);
+    choiceEl.appendChild(answer4);
+    answer1.setAttribute('class', 'choices')
+    answer1.setAttribute('value', currentQuestion.choices[0])
+    answer2.setAttribute('class', 'choices')
+    answer2.setAttribute('value', currentQuestion.choices[1])
+    answer3.setAttribute('class', 'choices')
+    answer3.setAttribute('value', currentQuestion.choices[2])
+    answer4.setAttribute('class', 'choices')
+    answer4.setAttribute('value', currentQuestion.choices[3])
+    choiceEl.setAttribute('style', 'display: flex; flex-direction: column; align-items: center');
+    answer1.onclick = questionClick;
+    answer2.onclick = questionClick;
+    answer3.onclick = questionClick;
+    answer4.onclick = questionClick;
+    console.log(choice)
+  })
 }
+function questionClick() {
+  if (this.value !== questions[currentQuestionIndex].correctAnswer) {
+    timeLeft -= 10;
+  }
+timerEl.textcontent = "Time left:" + timeLeft;
+currentQuestionIndex++;
+if (currentQuestionIndex === questions.length){
+  quizEnd()
+}  
+else{
+  getQuestion();
+}
+}
+
+function quizEnd(){
+  clearInterval(timeInterval);
+  questionTitleEl.setAttribute('class', 'hide');
+  answer1.setAttribute('class', 'hide');
+  answer2.setAttribute('class', 'hide');
+  answer3.setAttribute('class', 'hide');
+  answer4.setAttribute('class', 'hide');
+  scoreEl.setAttribute('style', 'font-size: 50px')
+  scoreEl.textContent = "Your final score is: " + timeLeft; 
+}
+
+
+
 
 function countdown() {
-  var timeLeft = 45;
+
 
   // Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
-  var timeInterval = setInterval(function() {
+  timeInterval = setInterval(function () {
     // As long as the `timeLeft` is greater than 1
     if (timeLeft > 1) {
       // Set the `textContent` of `timerEl` to show the remaining seconds
@@ -72,3 +131,5 @@ function countdown() {
     }
   }, 1000);
 }
+
+buttonEl.onclick = startQuiz;

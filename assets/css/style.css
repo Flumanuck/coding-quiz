@@ -15,7 +15,7 @@ main {
   justify-content: space-between;
 }
 
-.container {
+.container, #welcome-screen {
   justify-content: space-evenly;
   width: 32%;
 }
@@ -24,18 +24,22 @@ main {
   justify-content: space-between;
 }
 
-.btn {
+.choices {
   outline: none;
   border: none;
   padding: 10px 15px;
+  min-width: 50px;
   background: hsl(300, 66%, 46%);
   font-size: 1.1rem;
   border-radius: 12px;
   box-shadow: 0 3px black;
 }
 
-.btn:hover {
+.choices:hover {
   background: hsl(300, 66%, 30%);
   box-shadow: 0 2px black;
- 
+}
+
+.hide {
+  display: none;
 }
